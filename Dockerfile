@@ -1,12 +1,9 @@
-FROM nginx:latest
+FROM php:8.2-apache
 
-RUN apt-get update && \
-    apt-get install -y php-fpm php-mysql && \
-    mkdir -p /run/php
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-COPY . /var/www/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY . /var/www/html/
 
 EXPOSE 80
 
-CMD sh -c "php-fpm -D || php-fpm8.1 -D || php-fpm8.2 -D || php-fpm8.3 -D; php /var/www/html/init.php; nginx -g 'daemon off;'"
+CMD php /var/www/html/init.php && apache2-foreground
