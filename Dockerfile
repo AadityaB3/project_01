@@ -9,6 +9,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD php-fpm8.2 -D || php-fpm8.1 -D || php-fpm8.3 -D; \
-    php /var/www/html/init.php; \
-    nginx -g 'daemon off;'
+CMD sh -c "php-fpm -D || php-fpm8.1 -D || php-fpm8.2 -D || php-fpm8.3 -D; php /var/www/html/init.php; nginx -g 'daemon off;'"
